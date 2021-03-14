@@ -2,5 +2,6 @@
 <config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Backend:etc/menu.xsd">
     <menu>
         <add id="ODigital_Price::price_list" title="Special Price" translate="title" module="ODigital_Price" sortOrder="50" resource="ODigital_Price::price_list"/>
+        <add id="ODigital_Price::price_list_index" title="List" translate="title" module="ODigital_Price" sortOrder="1" parent="ODigital_Price::price_list" action="odigital/price" resource="ODigital_Price::price_list_index"/>
     </menu>
 </config>
