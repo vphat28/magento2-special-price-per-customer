@@ -10,6 +10,13 @@
         <deps>
             <dep>odigital_price_listing.odigital_price_listing_data_source</dep>
         </deps>
+        <buttons>
+            <button name="add">
+                <url path="*/*/add"/>
+                <class>primary</class>
+                <label translate="true">New Special Price</label>
+            </button>
+        </buttons>
     </settings>
     <dataSource name="odigital_price_listing_data_source" component="Magento_Ui/js/grid/provider">
         <settings>
@@ -43,15 +50,14 @@
             </filterSelect>
         </filters>
         <massaction name="listing_massaction"
-                    component="Magento_Ui/js/grid/tree-massactions"
-                    class="\Magento\Catalog\Ui\Component\Product\MassAction">
+                    component="Magento_Ui/js/grid/tree-massactions">
             <action name="delete">
                 <settings>
                     <confirm>
                         <message translate="true">Delete selected items?</message>
                         <title translate="true">Delete items</title>
                     </confirm>
-                    <url path="catalog/product/massDelete"/>
+                    <url path="*/*/delete"/>
                     <type>delete</type>
                     <label translate="true">Delete</label>
                 </settings>
@@ -60,18 +66,6 @@
         <paging name="listing_paging"/>
     </listingToolbar>
     <columns name="odigital_price_columns">
-        <!--<settings>
-            <childDefaults>
-                <param name="fieldAction" xsi:type="array">
-                    <item name="provider" xsi:type="string">odigital_price_listing.odigital_price_listing.odigital_price_columns.actions</item>
-                    <item name="target" xsi:type="string">applyAction</item>
-                    <item name="params" xsi:type="array">
-                        <item name="0" xsi:type="string">edit</item>
-                        <item name="1" xsi:type="string">${ $.$data.rowIndex }</item>
-                    </item>
-                </param>
-            </childDefaults>
-        </settings>-->
         <selectionsColumn name="ids">
             <settings>
                 <indexField>entity_id</indexField>
@@ -84,18 +78,43 @@
                 <sorting>asc</sorting>
             </settings>
         </column>
-        <column name="product_id">
+        <column name="product_name">
             <settings>
                 <filter>text</filter>
+                <sortable>false</sortable>
+                <dataScope>product_name</dataScope>
                 <bodyTmpl>ui/grid/cells/html</bodyTmpl>
                 <label translate="true">Product</label>
             </settings>
         </column>
-        <column name="customer_id">
+        <column name="customer_email">
+            <settings>
+                <filter>text</filter>
+                <sortable>false</sortable>
+                <dataScope>customer_email</dataScope>
+                <bodyTmpl>ui/grid/cells/html</bodyTmpl>
+                <label translate="true">Customer</label>
+            </settings>
+        </column>
+        <column name="value">
             <settings>
                 <filter>text</filter>
                 <bodyTmpl>ui/grid/cells/html</bodyTmpl>
-                <label translate="true">Customer</label>
+                <label translate="true">Special Price</label>
+            </settings>
+        </column>
+        <column name="start_date">
+            <settings>
+                <filter>text</filter>
+                <bodyTmpl>ui/grid/cells/html</bodyTmpl>
+                <label translate="true">Start Date</label>
+            </settings>
+        </column>
+        <column name="end_date">
+            <settings>
+                <filter>text</filter>
+                <bodyTmpl>ui/grid/cells/html</bodyTmpl>
+                <label translate="true">End Date</label>
             </settings>
         </column>
         <actionsColumn name="actions" class="ODigital\Price\Ui\Component\Listing\Column\Actions">

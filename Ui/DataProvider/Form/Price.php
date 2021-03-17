@@ -1,6 +1,6 @@
 <?php
 
-namespace ODigital\Price\Ui\DataProvider;
+namespace ODigital\Price\Ui\DataProvider\Form;
 
 use Magento\Catalog\Api\ProductRepositoryInterface;
 use Magento\Customer\Api\CustomerRepositoryInterface;
@@ -29,9 +29,9 @@ class Price extends AbstractDataProvider
         $name,
         $primaryFieldName,
         $requestFieldName,
+        CollectionFactory $collectionFactory,
         ProductRepositoryInterface $productRepository,
         CustomerRepositoryInterface $customerRepository,
-        CollectionFactory $collectionFactory,
         Helper $helper,
         array $meta = [],
         array $data = []
@@ -39,23 +39,29 @@ class Price extends AbstractDataProvider
     {
         parent::__construct($name, $primaryFieldName, $requestFieldName, $meta, $data);
         $this->collection = $collectionFactory->create();
-        $this->customerRepository = $customerRepository;
         $this->productRepository = $productRepository;
+        $this->customerRepository = $customerRepository;
         $this->helper = $helper;
     }
 
     public function getData()
-    { 
+    {
+
         $data = parent::getData();
 
-        foreach ($data['items'] as $k => $item) {
-            $product = $this->productRepository->getById($item['product_id']);
-            $customer = $this->customerRepository->getById($item['customer_id']);
-            $item['product_name'] = $product->getName();
-            $item['product_image'] = $this->helper->getThumbnailUrl($product);
-            $item['customer_email'] = $customer->getEmail();
+        if (isset($data['items'])) {
+            $items = [];
 
-            $data['items'][$k] = $item;
+            foreach ($data['items'] as $item) {
+                $product = $this->productRepository->getById($item['product_id']);
+                $customer = $this->customerRepository->getById($item['customer_id']);
+                $item['product_name'] = $product->getName();
+                $item['product_image'] = $this->helper->getThumbnailUrl($product);
+                $item['customer_email'] = $customer->getEmail();
+                $items[$item['entity_id']] = $item;
+            }
+
+            return $items;
         }
 
         return $data;

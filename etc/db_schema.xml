@@ -5,10 +5,17 @@
         <column xsi:type="int" name="entity_id" padding="10" unsigned="true" nullable="false" identity="true" comment="Entity ID"/>
         <column xsi:type="int" name="product_id" padding="10" unsigned="true" nullable="false" identity="false" comment="Product ID"/>
         <column xsi:type="int" name="customer_id" padding="10" unsigned="true" nullable="false" identity="false" comment="Customer ID"/>
+        <column xsi:type="float" name="value" unsigned="true" nullable="false" comment="Value"/>
+        <column xsi:type="date" name="start_date" comment="Start Date"/>
+        <column xsi:type="date" name="end_date" comment="End Date"/>
         <constraint xsi:type="primary" referenceId="PRIMARY">
             <column name="entity_id"/>
         </constraint>
         <constraint xsi:type="foreign" referenceId="ODIGITAL_SPECIAL_PRICE_PRODUCT_ID_PRODUCT_ENTITY_ID" table="odigital_special_price" column="product_id" referenceTable="catalog_product_entity" referenceColumn="entity_id" onDelete="CASCADE"/>
         <constraint xsi:type="foreign" referenceId="ODIGITAL_SPECIAL_PRICE_CUSTOMER_ID_CUSTOMER_ENTITY_ID" table="odigital_special_price" column="customer_id" referenceTable="customer_entity" referenceColumn="entity_id" onDelete="CASCADE"/>
+        <constraint xsi:type="unique" referenceId="ODIGITAL_SPECIAL_PRICE_CUSTOMER_ID_PRODUCT_ID">
+            <column name="customer_id"/>
+            <column name="product_id"/>
+        </constraint>
     </table>
 </schema>

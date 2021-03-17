@@ -17,5 +17,4 @@ class Price extends AbstractCollection
     {
         $this->_init(EntityModel::class, ResourceModel::class);
     }
-
 }
