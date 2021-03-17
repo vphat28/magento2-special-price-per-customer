@@ -44,6 +44,16 @@ class SpecialPrice
         $collection->addFieldToFilter('product_id', $productId);
 
         foreach ($collection as $item) {
+            if (!empty($item->getData('start_date')) && strtotime($item->getData('start_date')) > time()) {
+                // NOt this time
+                break;
+            }
+
+            if (!empty($item->getData('end_date')) && strtotime($item->getData('end_date')) < time()) {
+                // NOt this time
+                break;
+            }
+
             $specialPrice = $item->getData('value');
         }
 
